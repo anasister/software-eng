@@ -1,5 +1,6 @@
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
@@ -11,6 +12,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.SwingConstants;
 import javax.swing.JMenuItem;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+import java.awt.Font;
 
 
 public class Mainpage {
@@ -34,6 +40,7 @@ public class Mainpage {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 11));
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setBounds(100, 100, 633, 469);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,19 +56,35 @@ public class Mainpage {
 		label_1.setBounds(10, 11, 126, 105);
 		frame.getContentPane().add(label_1);
 		
-		JMenu mnNewMenu = new JMenu("\u0646\u0627\u0645\u0647 \u0647\u0627");
-		mnNewMenu.setHorizontalAlignment(SwingConstants.RIGHT);
-		mnNewMenu.setBounds(29, 142, 107, 22);
-		frame.getContentPane().add(mnNewMenu);
+		JButton btnNewButton = new JButton("\u0646\u0627\u0645\u0647 \u0647\u0627");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnNewButton.setBounds(490, 152, 89, 23);
+		frame.getContentPane().add(btnNewButton);
 		
-		JMenu mnNewMenu_1 = new JMenu("\u0645\u062E\u0627\u0637\u0628\u06CC\u0646");
-		mnNewMenu_1.setBounds(29, 166, 107, 22);
-		frame.getContentPane().add(mnNewMenu_1);
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(240, 255, 255));
+		panel.setBorder(null);
+		panel.setBounds(467, 115, 140, 304);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("\u0645\u0634\u0627\u0647\u062F\u0647 \u0645\u062E\u0627\u0637\u0628\u06CC\u0646");
-		mnNewMenu_1.add(mntmNewMenuItem);
+		JButton btnNewButton_1 = new JButton("\u0645\u062E\u0627\u0637\u0628\u06CC\u0646");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frame.setVisible(false);
+				contacts con = new contacts();
+				con.setFrame(true);
+			}
+		});
+		btnNewButton_1.setBounds(23, 73, 89, 23);
+		panel.add(btnNewButton_1);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("\u0627\u0641\u0632\u0648\u062F\u0646 \u0645\u062E\u0627\u0637\u0628");
-		mnNewMenu_1.add(mntmNewMenuItem_1);
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(176, 224, 230));
+		panel_1.setBounds(10, 115, 446, 304);
+		frame.getContentPane().add(panel_1);
 	}
 }

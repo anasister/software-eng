@@ -28,5 +28,12 @@ public class Contact {
 	public void setId(String id) {
 		this.id = id;
 	}
+	public Contact(String firstName, String lastName, String email, String id) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.id = id;
+	}
 	
 }

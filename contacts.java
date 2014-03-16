@@ -34,6 +34,11 @@ import java.awt.SystemColor;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.JPanel;
+import javax.swing.border.MatteBorder;
+import java.awt.Label;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 public class contacts {
@@ -80,26 +85,27 @@ public class contacts {
 		label_1.setBounds(10, 11, 126, 105);
 		frame.getContentPane().add(label_1);
 		
-		Panel leftpanel = new Panel();
-		FlowLayout flowLayout = (FlowLayout) leftpanel.getLayout();
-		flowLayout.setHgap(14);
-		leftpanel.setForeground(SystemColor.menu);
-		leftpanel.setBounds(20, 122, 126, 392);
-		frame.getContentPane().add(leftpanel);
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel_1.setBackground(new Color(240, 255, 255));
+		panel_1.setBounds(20, 121, 126, 393);
+		frame.getContentPane().add(panel_1);
 		
 		final JList list = new JList();
+		list.setBackground(new Color(240, 255, 255));
+		panel_1.add(list);
+		
+				list.setModel(new AbstractListModel() {
+					String[] values = new String[] {"دانشجو", "استاد"};
+					public int getSize() {
+						return values.length;
+					}
+					public Object getElementAt(int index) {
+						return values[index];
+					}
+				});
+				list.setSelectedIndex(0);
 
-		list.setModel(new AbstractListModel() {
-			String[] values = new String[] {"\u062F\u0627\u0646\u0634 \u062C\u0648", "\u0627\u0633\u062A\u0627\u062F"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		list.setSelectedIndex(0);
-		leftpanel.add(list);
 		
 		Panel rightpanel = new Panel();
 		rightpanel.setBounds(152, 121, 580, 393);
@@ -194,6 +200,13 @@ public class contacts {
 		scrollPane.setBounds(10, 44, 560, 220);
 		rightpanel.add(scrollPane);
 		scrollPane.setBackground(UIManager.getColor("Button.background"));
+		
+		final JLabel error1 = new JLabel("اخطار : شما نمی توانید فیلدهای نام و نام خانوادگی و ایمیل را خالی بگذارید.");
+		error1.setVisible(false);
+		error1.setForeground(new Color(255, 0, 0));
+		error1.setHorizontalAlignment(SwingConstants.RIGHT);
+		error1.setBounds(134, 55, 462, 21);
+		frame.getContentPane().add(error1);
 		//ACTIONS:
 		//****************ON NEW...***********************
 		btnNew.addActionListener(new ActionListener() {
@@ -202,8 +215,14 @@ public class contacts {
 				if(list.getSelectedIndex()==0){
 					Student new_student = new  Student(n.getText(),ln.getText(),m.getText(),sh.getText());
 					students.add(new_student);
-					String[] fiel= {sh.getText() ,n.getText(),ln.getText(),m.getText()}; 
-					studentTable.addRow(fiel);
+					if(n.getText().length()==0 || ln.getText().length()==0 || m.getText().length()==0 )
+					{
+						error1.setVisible(true);
+					}
+					else{
+						String[] fiel= {n.getText() ,sh.getText(),ln.getText(),m.getText()}; 
+						studentTable.addRow(fiel);
+					}
 					
 				}
 				else{
@@ -211,18 +230,6 @@ public class contacts {
 					teachers.add(new_teacher);
 					String[] fiel= {sh.getText() ,n.getText(),ln.getText(),m.getText()}; 
 					teacherTable.addRow(fiel);
-				}
-			}
-		});
-		//************SELECT TABLE(STUDENT/TEACHER)*******************
-		list.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent arg0) {
-				if(list.getSelectedIndex()==0){
-					table.setModel(studentTable);
-					
-				}
-				else{
-					table.setModel(teacherTable);
 				}
 			}
 		});
@@ -242,6 +249,37 @@ public class contacts {
 					}
 				}
 					
+			}
+		});
+		//************SELECT TABLE(STUDENT/TEACHER)*******************
+		list.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				if(list.getSelectedIndex()==0){
+					table.setModel(studentTable);
+					
+				}
+				else{
+					table.setModel(teacherTable);
+				}
+			}
+		});
+		//**************INVISABLE ERROR1**************************
+		sh.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				error1.setVisible(false);
+			}
+		});
+		ln.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				error1.setVisible(false);
+			}
+		});
+		m.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				error1.setVisible(false);
 			}
 		});
 		
